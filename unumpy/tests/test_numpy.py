@@ -425,3 +425,12 @@ def test_linalg(backend, method, args, kwargs):
 
     if isinstance(ret, da.Array):
         ret.compute()
+
+
+def test_class_overriding():
+    with ua.set_backend(NumpyBackend, coerce=True):
+        assert isinstance(onp.add, np.ufunc)
+        assert isinstance(onp.dtype("float64"), np.dtype)
+        assert np.dtype("float64") == onp.float64
+        assert isinstance(np.dtype("float64"), onp.dtype)
+        assert issubclass(onp.ufunc, np.ufunc)
